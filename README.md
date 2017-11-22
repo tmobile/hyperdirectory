@@ -1,4 +1,4 @@
-![Hyper Directory Logo](HD_logo.png)
+![Hyper Directory Logo](HD_Logo.png)
 # Hyper Directory POC
 
 **Highly auditable blockchain-based, access management solution.**
