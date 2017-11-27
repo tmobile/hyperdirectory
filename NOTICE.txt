@@ -1,3 +1,3 @@
-This is the NOTICE.txt file for HyperDirectory, per the terms and conditions under the Apache License Version 2.0, dated January 2004.  See the license at http://www.apache.org/licenses/ for more details.  Attributions and additional notices pertaining to the source code are to be documented here.
+This is the NOTICE.txt file for HyperDirectory, per the terms and conditions under the Apache License Version 2.0, dated January 2004.  See the license at (http://www.apache.org/licenses/) for more details.  Attributions and additional notices pertaining to the source code are to be documented here.
 The original version of HyperDirectory (UI) was created by © T-Mobile USA, Inc., & released on 27th November 2017.
 HyperDirectory integration APIs for HyperLedger created by © Intel.
