@@ -16,6 +16,9 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Router} from '@angular/router';
 import {GroupService} from '../../services/groups/group.service';
 import {RequestsService} from "../../services/requests/requests.service";
+import {ContextService} from "../../services/context.service";
+import {MatSnackBar} from "@angular/material";
+import {UtilsService} from "../../services/utils.service";
 
 @Component({
     selector: 'app-request-access-modal',
@@ -26,11 +29,15 @@ export class RequestAccessModalComponent {
 
     constructor(private router: Router,
                 private requestsService: RequestsService,
+                private context: ContextService,
+                private utils: UtilsService,
+                public snackBar: MatSnackBar,
                 private groupService: GroupService) {
     }
 
     private _show;
     @Output() showChange = new EventEmitter();
+    @Input() group;
 
     @Input()
     set show(value) {
@@ -47,9 +54,14 @@ export class RequestAccessModalComponent {
     }
 
     requestAccess() {
-        this.requestsService.requestAccess(0)
-            .then(() => {
+        this.groupService.addMemberToGroup(this.group.id, this.context.getUser())
+            .then((response) => {
+
+                console.log('Request Access Response: ', response);
+                let user = this.context.getUser();
+                user.proposals.push(response.id);
                 this.close();
+                this.utils.defaultSnackBar('Request Sent')
             });
     }
 

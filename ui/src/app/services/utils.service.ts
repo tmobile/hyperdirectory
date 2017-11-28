@@ -15,8 +15,10 @@ limitations under the License.
 import {Injectable} from '@angular/core';
 import * as _ from "lodash";
 import {Headers, RequestOptions} from "@angular/http";
+import {MatSnackBar} from "@angular/material";
 @Injectable()
 export class UtilsService {
+    constructor(private snackBar: MatSnackBar){}
 
     setTimeoutPromise(milliseconds) {
         const promise = new Promise((resolve: any, reject: any) => {
@@ -49,6 +51,17 @@ export class UtilsService {
     catchError(error) {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
+    }
+
+    stubHttp(response) {
+        return this.setTimeoutPromise(100)
+            .then(() => {
+                return response;
+            })
+    }
+
+    defaultSnackBar(message) {
+        return this.snackBar.open(message, 'Dismiss', {duration: 5000});
     }
 
 }

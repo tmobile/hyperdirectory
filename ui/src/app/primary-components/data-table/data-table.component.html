@@ -54,8 +54,10 @@ limitations under the License.
         <td class="table-cell-options"
                 *ngIf="config.actionsComponent">
             <app-dynamic-component-loader
-                    [params]="[{provide: 'row', useValue: item},
-                    {provide: 'list', useValue: data}]"
+                    [params]="
+                    [{provide: 'row', useValue: item},
+                    {provide: 'list', useValue: data},
+                    {provide: 'parentData', useValue: parentData}]"
                     [component]="config.actionsComponent"></app-dynamic-component-loader>
         </td>
     </tr>

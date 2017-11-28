@@ -150,4 +150,12 @@ export class MembersComponent {
 
         }
     }
+
+    alreadyRequested() {
+        // let found = _.find(this.user.proposals, (proposalId) => {
+        //     return this.group.id === proposalId;
+        // });
+        //
+        return false;
+    }
 }

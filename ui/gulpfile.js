@@ -10,9 +10,9 @@ gulp.task('test', [], function () {
 gulp.task('add-license', [], function () {
     var header = fs.readFileSync('header.txt', 'utf-8');
     console.log(header);
-    var htmlHeader = '<!--' + header + '-->\n' +
+    var htmlHeader = '<!--' + header + '-->' +
         '';
-    var jsHeader = '/*' + header + '*/\n';
+    var jsHeader = '/*' + header + '*/';
 
     var jsSrc = ['./src/**/*.ts',
         './src/**/*.js',

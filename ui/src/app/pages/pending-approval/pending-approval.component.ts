@@ -20,6 +20,7 @@ import {PendingApprovalActionsComponent} from "../../secondary-components/pendin
 import {TableHeader} from "../../models/table-header.model";
 import {ContextService} from "../../services/context.service";
 import {UsersUtilsService} from "../../services/users/users-utils.service";
+import * as _ from "lodash";
 
 @Component({
     selector: 'app-pending-approval',
@@ -30,6 +31,7 @@ export class PendingApprovalComponent implements OnInit {
     public requestsSent;
     public tableConfig;
     public user;
+    public allGroups;
 
     constructor(private activatedRoute: ActivatedRoute,
                 private groupService: GroupService,
@@ -37,18 +39,19 @@ export class PendingApprovalComponent implements OnInit {
                 private usersUtils: UsersUtilsService,
                 private utils: UtilsService) {
         this.requestsSent = this.activatedRoute.snapshot.data['requestsSent'];
-        this.user = this.context.user;
+        this.user = this.context.getUser();
+        this.allGroups = this.context.getAllGroups();
         this.tableConfig = {
             selectable: false,
             headers: [
-                new TableHeader('Group Name', 'name', 'function', (element) => {
-                    return element.group.name;
+                new TableHeader('Group Name', '', 'function', (element) => {
+                    return _.find(this.allGroups, {id: element.object}).name;
                 }),
-                new TableHeader('Reason', 'change_description', 'string'),
+                new TableHeader('Reason', 'openReason', 'string'),
                 new TableHeader('Owner', '', 'function', (element) => {
-                    return this.usersUtils.displayOwners(element, this.user, 'approvers');
+                    let group = _.find(this.allGroups, {id: element.object});
+                    return this.usersUtils.displayOwners(group, this.user);
                 }),
-                new TableHeader('Date Requested', 'dateRequested', 'date'),
             ],
             actionsComponent: PendingApprovalActionsComponent
         };

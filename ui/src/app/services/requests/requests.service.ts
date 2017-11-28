@@ -17,74 +17,67 @@ import {Http} from "@angular/http";
 import {environment} from "../../../environments/environment";
 import {UtilsService} from "../utils.service";
 import {ContextService} from "../context.service";
+import {UsersService} from "../users/users.service";
 
 
 @Injectable()
 export class RequestsService {
 
     constructor(private http: Http,
+                private usersService: UsersService,
                 private context: ContextService,
                 private utils: UtilsService) {
     }
 
+    getRequest(requestId) {
+        let request = environment.get_proposal(requestId);
 
-    requestAccess(groupId) {
-        return this.http.get('')
-            .toPromise();
-    }
-
-    getUserRequestsReceived(userId) {
-        return this.http.get('')
+        return this.http.get(request.url, this.context.httpOptions())
             .toPromise()
             .then((response) => {
-                return response.json();
+                // console.log('Request: ', request.responseFn(response));
+                return request.responseFn(response);
             })
-            .catch(this.utils.catchError)
-    }
-
-    getUserRequestsSent(id) {
-        return this.http.get('')
-            .toPromise()
-            .then((response) => {
-                return response.json()
-            }).catch(this.utils.catchError)
     }
 
     approveRequest(requestId, reason = '') {
-        let request = environment.patch_proposal(requestId, 'CONFIRMED', reason, '');
+        console.log('Approved Request ' + requestId);
+        let request = environment.patch_proposal(requestId, 'APPROVED', reason, '');
 
+        // return this.utils.stubHttp({
+        //     json: () => {
+        //         return {
+        //             data: { message: 'success', code: 200}
+        //         }
+        //     }
+        // });
         return this.http[request.method](request.url, request.body, this.context.httpOptions())
             .toPromise()
             .then((response) => {
-                console.log(response.json());
-                return response.json();
+                console.log('Approved Request ', response.status);
+                return response.status;
             })
             .catch(this.utils.catchError);
     }
 
     denyRequest(requestId, reason = '') {
+        console.log('Denied Request ' + requestId);
         let request = environment.patch_proposal(requestId, 'REJECTED', reason, '');
+
+        // return this.utils.stubHttp({
+        //     json: () => {
+        //         return {
+        //             data: {message: 'success', code: 200}
+        //         }
+        //     }
+        // });
 
         return this.http[request.method](request.url, request.body, this.context.httpOptions())
             .toPromise()
             .then((response) => {
-                return response.json();
-            })
-            .catch(this.utils.catchError);
-    }
-
-    approveAllRequests(selection) {
-        return this.utils.setTimeoutPromise(1000)
-            .then(() => {
-                return true;
-            })
-            .catch(this.utils.catchError);
-    }
-
-    denyAllRequests(selection) {
-        return this.utils.setTimeoutPromise(1000)
-            .then(() => {
-                return true;
+                // return response.json();
+                console.log('Denied Request ' + response.status);
+                return response.status;
             })
             .catch(this.utils.catchError);
     }

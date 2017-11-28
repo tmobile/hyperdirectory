@@ -14,8 +14,9 @@ limitations under the License.
 =========================================================================*/
 
 // let base = 'http://cso-aws-reinvent-2084431983.us-west-2.elb.amazonaws.com/api';
-let base = 'https://ra87657c48.execute-api.us-west-2.amazonaws.com/api';
-
+// let base = 'https://ra87657c48.execute-api.us-west-2.amazonaws.com/api';
+let base = 'http://cso-reinvent-283321983.us-west-2.elb.amazonaws.com/api';
+// let base = 'https://ra87657c48.execute-api.us-west-2.amazonaws.com/api';
 export const environment = {
     production: true,
 
@@ -44,6 +45,11 @@ export const environment = {
     },
 
     // USERS API
+    get_user: (userId) => {
+        return {
+            url: base + '/users/' + userId
+        }
+    },
     users: base + '/users',
     create_user: (name, password, email, manager, metadata) => {
         return {
@@ -62,9 +68,17 @@ export const environment = {
     },
 
     //PROPOSALS API
+    get_proposal: (proposalId) => {
+        return {
+            url: base + '/proposals/' + proposalId,
+            responseFn: (response) => {
+                return response.json().data;
+            }
+        }
+    },
     patch_proposal: (proposalId, status, reason, metadata) => {
         return {
-            url: '/proposals/' + proposalId,
+            url: base + '/proposals/' + proposalId,
             method: 'patch',
             body: {
                 status: status,

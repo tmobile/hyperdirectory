@@ -45,8 +45,6 @@ export class Request {
         this.status = {
             status: "OPEN"
         };
-        this.openReason = '';
-        this.closeReason = '';
         this.closer = '';
         this.id = i;
         i += 1;

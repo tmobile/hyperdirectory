@@ -12,11 +12,44 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 =========================================================================*/
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {RequestsService} from "./requests.service";
+import * as _ from "lodash";
 
 @Injectable()
 export class RequestsUtilsService {
 
-  constructor() { }
+    constructor(private requestsService: RequestsService) {
+
+    }
+
+    getAllRequests(requestList) {
+        let list = [];
+        _.each(requestList, (requestId) => {
+            list.push(this.requestsService.getRequest(requestId));
+        });
+
+        return Promise.all(list)
+    }
+
+    approveAllRequests(selection) {
+        console.log(selection);
+        let list = [];
+        _.each(selection, (request) => {
+            list.push(this.requestsService.approveRequest(request.id));
+        });
+
+        return Promise.all(list);
+    }
+
+    denyAllRequests(selection) {
+        console.log(selection);
+        let list = [];
+        _.each(selection, (request) => {
+            list.push(this.requestsService.denyRequest(request.id));
+        });
+
+        return Promise.all(list);
+    }
 
 }

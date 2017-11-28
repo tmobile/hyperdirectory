@@ -22,6 +22,7 @@ import {RequestsService} from "../../services/requests/requests.service";
 import {TableHeader} from "../../models/table-header.model";
 import {GroupsUtilsService} from "../../services/groups/groups-utils.service";
 import {UsersUtilsService} from "../../services/users/users-utils.service";
+import {RequestsUtilsService} from "../../services/requests/requests-utils.service";
 
 @Component({
     selector: 'app-requests',
@@ -38,6 +39,7 @@ export class RequestsComponent {
                 private groupService: GroupService,
                 private groupUtils: GroupsUtilsService,
                 private usersUtils: UsersUtilsService,
+                private requestUtils: RequestsUtilsService,
                 private requestsService: RequestsService,
                 private utils: UtilsService) {
         this.requestsReceived = this.activatedRoute.snapshot.data['requestsReceived'];
@@ -62,7 +64,7 @@ export class RequestsComponent {
         this.confirmModalConfig = {
             confirmMessage: 'Approve ' + this.tableConfig.selection.length + ' request(s)?',
             onConfirm: () => {
-                this.requestsService.approveAllRequests(this.tableConfig.selection)
+                this.requestUtils.approveAllRequests(this.tableConfig.selection)
                     .then((response) => {
                         _.remove(this.requestsReceived, (request: any) => {
                             return _.find(this.tableConfig.selection, (selectionElement: any) => {
@@ -82,7 +84,7 @@ export class RequestsComponent {
         this.confirmModalConfig = {
             confirmMessage: 'Deny ' + this.tableConfig.selection.length + ' request(s)?',
             onConfirm: () => {
-                this.requestsService.denyAllRequests(this.tableConfig.selection)
+                this.requestUtils.denyAllRequests(this.tableConfig.selection)
                     .then((response) => {
                         _.remove(this.requestsReceived, (request: any) => {
                             return _.find(this.tableConfig.selection, (selectionElement: any) => {

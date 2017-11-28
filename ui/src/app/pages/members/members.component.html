@@ -16,10 +16,10 @@ limitations under the License.
                   [header]="group.name">
     <app-link *ngIf="isOwner"
               (onClickInner)="addMemberModal()"
-              class="link-bold">
-        <i class="icon-icon-add"></i>Add Member
+              class="link-bold-disabled">
+        <i class="fa fa-plus"></i>Add Member
     </app-link>
-    <app-link *ngIf="!isOwner"
+    <app-link *ngIf="!isOwner && !alreadyRequested()"
               class="link-bold" (onClickInner)="requestAccessModal()">
         <i class="fa fa-check-circle-o"></i>
         Request Access
@@ -32,6 +32,7 @@ limitations under the License.
 </app-panel-header>
 <app-data-table
         [data]="members"
+        [parentData]="{group: group}"
         [config]="tableConfig"></app-data-table>
 <app-panel-footer *ngIf="tableConfig.selection.length"
                   [selection]="tableConfig.selection"
@@ -52,6 +53,7 @@ limitations under the License.
                           [(show)]="showModal">
     </app-add-member-modal>
     <app-request-access-modal *ngSwitchCase="'request-access'"
+                              [group]="group"
                               [(show)]="showModal">
     </app-request-access-modal>
 </div>

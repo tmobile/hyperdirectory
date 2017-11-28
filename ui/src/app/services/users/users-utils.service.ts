@@ -17,11 +17,17 @@ import {ContextService} from "../context.service";
 import * as _ from "lodash";
 import {GroupsUtilsService} from "../groups/groups-utils.service";
 import {getUser} from "../../mock-data/user";
+import {UsersService} from "./users.service";
+import {RequestsService} from "../requests/requests.service";
+import {RequestsUtilsService} from "../requests/requests-utils.service";
 
 @Injectable()
 export class UsersUtilsService {
 
     constructor(private groupUtils: GroupsUtilsService,
+                private usersService: UsersService,
+                private requestsService: RequestsService,
+                private requestsUtils: RequestsUtilsService,
                 private context: ContextService) {
 
     }
@@ -61,5 +67,18 @@ export class UsersUtilsService {
         } else {
             console.log('Group has no members');
         }
+    }
+
+    getRequestsPendingApproval() {
+        let userId = this.context.getUser().id;
+        return this.usersService
+            .getUser(userId)
+            .then((user) => {
+                return this.requestsUtils.getAllRequests(user.proposals);
+            })
+            .then((requests) => {
+                console.log('All User Requests: ', requests);
+                return requests;
+            });
     }
 }

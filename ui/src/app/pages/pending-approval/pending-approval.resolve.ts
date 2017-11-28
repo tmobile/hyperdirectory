@@ -15,14 +15,16 @@ limitations under the License.
 import {Injectable} from '@angular/core';
 import {Resolve, ActivatedRouteSnapshot} from '@angular/router';
 import {RequestsService} from "../../services/requests/requests.service";
+import {UsersUtilsService} from "../../services/users/users-utils.service";
 
 @Injectable()
 export class PendingApprovalResolve implements Resolve<any> {
 
-    constructor(private requestsService: RequestsService) {
+    constructor(private requestsService: RequestsService,
+                private userUtils: UsersUtilsService) {
     }
 
     resolve(route: ActivatedRouteSnapshot) {
-        return this.requestsService.getUserRequestsSent(route.paramMap.get('id'));
+        return this.userUtils.getRequestsPendingApproval();
     }
 }

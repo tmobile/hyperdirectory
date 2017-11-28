@@ -35,6 +35,8 @@ export class DataTableComponent {
         actionsComponent: null
     };
     @Input() data = [];
+    @Input() parentData = {};
+
     @Output() onRowClick = new EventEmitter();
 
     onRowClickInner($event, item, i) {
