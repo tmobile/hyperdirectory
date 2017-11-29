@@ -1,6 +1,10 @@
-# Hyper Directory SPA
+# Hyper Directory
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.4.
+
+## Installation
+
+Run `npm install` to get all the latest packages. This project was build with Node v6.11.3 and npm v3.10.10.
 
 ## Development server
 

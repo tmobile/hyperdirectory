@@ -16,7 +16,7 @@ import {User} from "../models/user.model";
 import * as _ from "lodash";
 
 export const USERS = [
-    new User('Richard Nixon\'s Head'),
+    new User('Richard Nixon\'s Head', [], [], [], [], [], [0, 5, 6, ], ''),
     new User('Spiro T. Agnew'),
     new User('John N. Mitchell'),
     new User('H. R. Haldeman'),

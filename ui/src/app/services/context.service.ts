@@ -22,16 +22,14 @@ export class ContextService {
     public user;
     public allUsers;
     public allGroups;
-    public headers;
 
     constructor(private router: Router) {
-        this.headers = new Headers();
-        this.headers.append('Content-Type', 'application/json');
     }
 
     httpHeaders() {
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
+        // headers.append('Access-Control-Allow-Methods','GET, POST, PUT, DELETE, PATCH');
+        // headers.append('Content-Type', 'application/json');
         headers.set('Authorization', this.getAuthKey());
         return headers;
     }

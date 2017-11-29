@@ -51,6 +51,11 @@ export const environment = {
     //USERS API
 
     users: '/api/USERS',
+    get_user: (userId) => {
+        return {
+            url: '/api/GET_USER'
+        }
+    },
     create_user: (name, password, email, manager, metadata) => {
         return {
             url: '/api/CREATE_USER',
@@ -69,6 +74,14 @@ export const environment = {
     },
 
     //PROPOSALS API
+    get_proposal: (proposalId) => {
+        return {
+            url: '/api/PROPOSALS/' + proposalId,
+            responseFn: (response) => {
+                return response.json();
+            }
+        }
+    },
     patch_proposal: (proposalId, status, reason, metadata) => {
         return {
             url: '/api/PATCH_PROPOSAL',

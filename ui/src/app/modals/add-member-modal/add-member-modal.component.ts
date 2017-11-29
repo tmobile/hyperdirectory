@@ -17,6 +17,7 @@ import {FormControl} from "@angular/forms";
 import {UsersService} from "../../services/users/users.service";
 import {GroupService} from "../../services/groups/group.service";
 import {ContextService} from "../../services/context.service";
+import {UtilsService} from "../../services/utils.service";
 
 @Component({
     selector: 'app-add-member-modal',
@@ -43,6 +44,7 @@ export class AddMemberModalComponent {
     }
 
     constructor(private usersService: UsersService,
+                private utils: UtilsService,
                 private context: ContextService,
                 private groupService: GroupService) {
         this.users = context.getAllUsers();
@@ -57,6 +59,7 @@ export class AddMemberModalComponent {
             .then((response) => {
                 this.onAdd.emit(this.addMemberForm.value);
                 this.close();
+                this.utils.defaultSnackBar('Request Sent');
             });
     }
 

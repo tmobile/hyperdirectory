@@ -41,3 +41,20 @@ limitations under the License.
     font-size: 1.5em;
   }
 }
+
+.link-bold-disabled {
+  a {
+    color: $color-gray-border !important;
+    cursor: not-allowed !important;
+    font-size: 1.25rem;
+    font-family: ex2-bold;
+    &:hover {
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+    &:active{
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+  }
+}

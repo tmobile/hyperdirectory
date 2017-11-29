@@ -22,6 +22,8 @@ import "rxjs/add/operator/catch";
 import {User} from "../../models/user.model";
 import {toPromise} from "rxjs/operator/toPromise";
 import {ContextService} from "../context.service";
+import * as _ from "lodash";
+import {utils} from "protractor";
 
 
 @Injectable()
@@ -48,11 +50,11 @@ export class UsersService {
 
 
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this.http.post(environment.login, body, {headers: headers})
+        // headers.append('Content-Type', 'application/json');
+        return this.http.post(environment.login, body)
             .toPromise()
             .then((response) => {
-                let data =  response.json().data.authorization;
+                let data = response.json().data.authorization;
                 console.log('Authorize', data);
                 return data;
             })
@@ -63,10 +65,8 @@ export class UsersService {
         let request = environment.create_user(name, password, email, manager, metadata);
 
         let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        return this.http.post(request.url, request.body, {
-            headers: headers
-        })
+        // headers.append('Content-Type', 'application/json');
+        return this.http.post(request.url, request.body)
             .toPromise()
             .then((response) => {
                 return response.json().data;
@@ -80,21 +80,38 @@ export class UsersService {
         })
             .toPromise()
             .then((response) => {
-            console.log('Users: ', response.json().data);
+                console.log('Users: ', response.json().data);
                 return response.json().data;
             })
             .catch(this.utils.catchError)
     }
 
     getUserRequests() {
+        // this.getUsers()
+        //     .then((users) => {
+        //         let proposals = _.reduce(users, (accumulator, user) => {
+        //             return accumulator.concat(user.proposals)
+        //         }, [])
+        //     })
         let url = environment.user_proposals(this.context.getUser().id);
         return this.http.get(url, {
             headers: this.context.httpHeaders()
         })
             .toPromise()
             .then((response) => {
+            console.log('User Proposals Open', response.json().data);
                 return response.json().data;
             })
             .catch(this.utils.catchError);
+    }
+
+    getUser(userId) {
+        let request = environment.get_user(userId);
+        return this.http.get(request.url, this.context.httpOptions())
+            .toPromise()
+            .then((response) => {
+                console.log('User: ', response.json().data);
+                return response.json().data;
+            }).catch(this.utils.catchError);
     }
 }

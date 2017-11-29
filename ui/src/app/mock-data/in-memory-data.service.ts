@@ -27,6 +27,8 @@ export class InMemoryDataService implements InMemoryDbService {
             LOGIN_RESPONSE: [{id: 0}],
             CREATE_USER: [{id: 0}],
             USERS: {data: USERS},
+            GET_USER: {data: _.find(USERS, {id: 1})},
+
             GROUPS: {data: GROUPS},
             USER_PROPOSALS: {data: _.filter(REQUESTS, (req) => {
                 let ownedGroups = _.filter(GROUPS, (group) => {
@@ -41,7 +43,8 @@ export class InMemoryDataService implements InMemoryDbService {
                 return !!targetInGroups;
             })},
             PATCH_PROPOSAL: [{id: 0}],
-            ADD_MEMBER: [{id: 0}]
+            ADD_MEMBER: [{id: 0}],
+            PROPOSALS: REQUESTS
         }
     }
 }

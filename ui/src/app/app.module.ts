@@ -17,7 +17,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes, RouterLink, RouterLinkActive} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatSelectModule, MatAutocompleteModule, MatInputModule} from '@angular/material';
+import {MatSelectModule, MatAutocompleteModule, MatInputModule, MatSnackBarModule} from '@angular/material';
 import {AngularFontAwesomeModule} from 'angular-font-awesome/angular-font-awesome';
 import {HttpModule} from '@angular/http';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
@@ -130,6 +130,7 @@ import {MembersResolve} from "./pages/members/members.resolve";
         RouterModule.forRoot(AppRoutes),
         BrowserAnimationsModule,
         MatSelectModule,
+        MatSnackBarModule,
         MatInputModule,
         MatAutocompleteModule,
         FormsModule,

@@ -16,6 +16,9 @@ import {Component, ElementRef, Injector, OnInit} from '@angular/core';
 import * as _ from "lodash";
 import {GroupService} from "../../services/groups/group.service";
 import {PopupItem} from "../../models/popup-item.model";
+import {UsersUtilsService} from "../../services/users/users-utils.service";
+import {ContextService} from "../../services/context.service";
+import {GroupsUtilsService} from "../../services/groups/groups-utils.service";
 
 @Component({
     selector: 'app-members-actions',
@@ -25,6 +28,7 @@ import {PopupItem} from "../../models/popup-item.model";
 export class MembersActionsComponent {
     public row;
     public list;
+    public group;
     public showDialog = false;
     public showConfirmModal = false;
     public confirmModalConfig: any = {};
@@ -38,11 +42,17 @@ export class MembersActionsComponent {
             this.removeFromGroup()
         })
     ];
+    currentUserOwner = false;
 
     constructor(private injector: Injector,
+                private usersUtils: UsersUtilsService,
+                private context: ContextService,
+                private groupUtils: GroupsUtilsService,
                 private groupService: GroupService) {
         this.row = injector.get('row');
         this.list = injector.get('list');
+        this.group = injector.get('parentData').group;
+        this.currentUserOwner = this.groupUtils.userIsOwner(this.context.getUser().id, this.group);
     }
 
     toggleDialog($event) {

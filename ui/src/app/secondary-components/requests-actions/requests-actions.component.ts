@@ -16,6 +16,9 @@ import {Component, Injector, OnInit, ElementRef} from '@angular/core';
 import * as _ from "lodash"
 import {RequestsService} from "../../services/requests/requests.service";
 import {PopupItem} from "../../models/popup-item.model";
+import {MatSnackBar} from "@angular/material";
+import {UtilsService} from "../../services/utils.service";
+import {UsersUtilsService} from "../../services/users/users-utils.service";
 
 @Component({
     selector: 'app-requests-actions',
@@ -39,6 +42,8 @@ export class RequestsActionsComponent {
     ];
 
     constructor(private injector: Injector,
+                private utils: UtilsService,
+                private usersUtils: UsersUtilsService,
                 private requestsService: RequestsService) {
         this.row = injector.get('row');
         this.list = injector.get('list');
@@ -47,11 +52,12 @@ export class RequestsActionsComponent {
     approve() {
         this.showConfirmModal = true;
         this.confirmModalConfig = {
-            confirmMessage: 'Approve request from ' + this.row.name,
+            confirmMessage: 'Approve request from ' + this.usersUtils.getUser(this.row.opener).name,
             onConfirm: () => {
                 this.requestsService.approveRequest(this.row.id)
                     .then((response) => {
                         _.remove(this.list, {id: this.row.id});
+                        this.utils.defaultSnackBar('Request Accepted');
                     })
             }
         }
@@ -60,11 +66,12 @@ export class RequestsActionsComponent {
     deny() {
         this.showConfirmModal = true;
         this.confirmModalConfig = {
-            confirmMessage: 'Deny request from ' + this.row.name,
+            confirmMessage: 'Deny request from ' + this.usersUtils.getUser(this.row.opener).name,
             onConfirm: () => {
                 this.requestsService.denyRequest(this.row.id)
                     .then((response) => {
                         _.remove(this.list, {id: this.row.id});
+                        this.utils.defaultSnackBar('Request Denied');
                     });
             }
         }
