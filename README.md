@@ -1,5 +1,11 @@
 ![Hyper Directory Logo](HD_Logo.png)
-# Hyper Directory POC
+# Hyper Directory is growing up!
+
+**You can now find active development under the Hyperledger Project as NEXT Directory.**
+
+**https://github.com/hyperledger/sawtooth-next-directory/**
+
+-------------------------------------------------------
 
 **Highly auditable blockchain-based, access management solution.**
 
